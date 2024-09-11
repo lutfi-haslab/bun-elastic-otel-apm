@@ -1,0 +1,17 @@
+{
+  "name": "my-hono-app",
+  "scripts": {
+    "dev": "bun --env-file=.env run --hot src/run.ts"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.15.0",
+    "@elastic/elasticsearch-serverless": "^0.6.0",
+    "@elastic/opentelemetry-node": "^0.3.0",
+    "@opentelemetry/api": "^1.9.0",
+    "hono": "^4.5.11"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.5.4"
+  }
+}
