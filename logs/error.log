@@ -1,0 +1,6 @@
+2024-09-13T10:13:50.478Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
+2024-09-13T10:13:50.631Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
+2024-09-13T10:13:50.818Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
+2024-09-13T10:13:50.995Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
+2024-09-13T10:13:52.266Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
+2024-09-13T10:13:55.956Z [HONO-APP] error: {"err":"boom","stack":"Error: boom\n    at fetch (/Users/hy4-mac-002/hasdev/my-hono-app/src/run.ts:19:18)","name":"Error"}
