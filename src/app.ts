@@ -1,27 +1,19 @@
 
-import { Client, HttpConnection } from '@elastic/elasticsearch';
 import { Hono } from 'hono';
+import { apiCounter } from './core/metrics';
 import { rollTheDice } from './dice';
-
-
-const client = new Client({
-  node: process.env.ELASTIC_URL,
-  auth: {
-    apiKey: process.env.ELASTIC_API_KEY as string
-  },
-  Connection: HttpConnection
-});
+import { client } from './core/search';
 
 
 const app = new Hono();
 
 app.get('/', (c) => {
-  // counter.add(1, { attributeKey: 'get /' });  // Record a metric
+  apiCounter.add(1, { attributeKey: 'get /' });
   return c.text('Hello Hono!');
 });
 
 app.get('/test-apm', async (c) => {
-  // counter.add(1, { attributeKey: 'get /test-apm' });
+  apiCounter.add(1, { attributeKey: 'get /test-apm' });
   try {
     const rollDice = JSON.stringify(rollTheDice(5, 1, 6))
     return c.json({ success: true, message: 'APM transaction completed' + rollDice });
@@ -32,19 +24,19 @@ app.get('/test-apm', async (c) => {
 });
 
 // Test Elasticsearch connection
-app.get('/test-elasticsearch', async (c) => {
-  // counter.add(1, { attributeKey: 'get /test-elasticsearch' });
+app.get('/test-elasticsearch/:index', async (c) => {
+  apiCounter.add(1, { attributeKey: 'get /test-elasticsearch/' + c.req.param('index') });
   try {
     const result = await client.ping();
     console.log(result)
     const resp = await client.info();
     await client.create({
       index: 'test',
-      id: '2',
+      id: c.req.param('index'),
       body: {
-        name: 'Lutfi Ikbal Majid',
-        age: 28,
-        city: 'Jakarta'
+        name: `User_${Math.floor(Math.random() * 1000)}`,
+        age: Math.floor(Math.random() * 100) + 1,
+        city: ['Jakarta', 'Bandung', 'Surabaya', 'Medan', 'Bali'][Math.floor(Math.random() * 5)]
       }
     });
 
