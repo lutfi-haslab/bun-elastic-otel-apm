@@ -1,14 +1,25 @@
 import '@elastic/opentelemetry-node';
-import { Span, trace } from '@opentelemetry/api';
+import { Span, trace, metrics, DiagLogger, diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
 // import './services/instrumentation';
 import app from './app';
+
+metrics.getMeterProvider();
+
 const tracer = trace.getTracer('API-Interceptor');
+const meter = metrics.getMeter('default');
+const counter = meter.createCounter('foo.test');
 
 const port = parseInt(process.env.PORT!) || 3000;
 console.log(`Running at http://localhost:${port}`);
 
 export default {
     fetch(req: Request, server: { requestIP: (arg0: any) => any }) {
+      counter.add(1, { attributeKey: 'get /' });
+      const logger = new DiagConsoleLogger();
+      diag.setLogger(logger, DiagLogLevel.INFO);
+      logger.info('Logger initialized with INFO level');
+      logger.debug('Logger initialized with DEBUG level');
+      logger.warn('Logger initialized with WARN level');
       // Start a new span for each request
       return tracer.startActiveSpan(req.method + ' ' + req.url, async (span: Span) => {
         try {
